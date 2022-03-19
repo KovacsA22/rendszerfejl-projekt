@@ -1,0 +1,171 @@
+POST /login
+
+    {
+        felhasznalonev:""
+        jelszo:""
+    }
+
+    vissza:
+
+        {
+            result:"OK",
+            szerepkör:""
+        }
+
+        vagy
+        {
+            result:"hiba"
+        }
+
+
+
+GET /tasks
+
+    {
+        tasks:[{
+            nev:"",
+            sulyossag:""(lehet int?)
+            ütemezés:""
+            állapot:""
+            időszakos:true
+        },{
+            nev:"",
+            sulyossag:""(lehet int?)
+            ütemezés:""
+            állapot:""
+            időszakos:true
+        },{
+            nev:"",
+            sulyossag:""(lehet int?)
+            ütemezés:""
+            állapot:""
+            időszakos:true
+        }]
+    }
+
+
+POST /new_task
+
+    {
+    nev:"",
+    sulyossag:""(lehet int?)
+    ütemezés:""
+    állapot:""(lehet int?)
+    időszakos:true
+    }
+
+    vissza:
+
+        {
+            result:"OK",
+        }
+
+        vagy
+        {
+            result:"hiba"
+        }
+
+GET /categories
+{
+    categories:[{
+        nev:""
+        normaido:4
+        periodus:5
+        instrukciok:""
+        vegzettsegek:["","",""](lehet int?)
+
+        },{
+        nev:""
+        normaido:4
+        periodus:5
+        instrukciok:""
+        vegzettsegek:["","",""](lehet int?)
+
+        }]
+
+}
+
+POST /new_category
+    {
+        nev:""
+        normaido:4
+        periodus:5
+        instrukciok:""
+        vegzettsegek:["","",""](lehet int?)
+        szulo_kategoria:""(lehet int?)
+    }
+
+    vissza:
+
+        {
+            result:"OK",
+        }
+
+        vagy
+        {
+            result:"hiba"
+        }
+
+GET /tools
+
+{
+    tools:[{
+        nev:""
+        kategoria:""(lehet int?)
+        leiras:""
+        elhelyezkedes:""
+        },{
+            nev:""
+            kategoria:""
+            leiras:""
+            elhelyezkedes:""
+        },
+    ]
+}
+
+POST /new_tool
+    {
+        nev:""
+        kategoria:"" (lehet int?)
+        leiras:""
+        elhelyezkedes:""
+    }
+
+    vissza:
+
+        {
+            result:"OK",
+        }
+
+        vagy
+        {
+            result:"hiba"
+        }
+
+
+GET /skills
+    {
+        skills:[{
+            id:0,
+            nev:""
+        }...]
+    }
+
+POST /new_skill
+    {
+        nev:""
+    }
+
+    vissza:
+
+        {
+            result:"OK",
+        }
+
+        vagy
+        {
+            result:"hiba"
+        }
+
+
+
