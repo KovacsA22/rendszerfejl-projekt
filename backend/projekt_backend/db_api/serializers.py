@@ -19,7 +19,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'password', 'role')
+        fields = ('username', 'password', 'role')
 
 
 class TaskSerializer(serializers.ModelSerializer):

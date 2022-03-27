@@ -39,3 +39,6 @@ class CategoryConnectionViewSet(viewsets.ModelViewSet):
     queryset = CategoryConnection.objects.all().order_by('parent')
     serializer_class = CategoryConnectionSerializer
 
+
+
+
