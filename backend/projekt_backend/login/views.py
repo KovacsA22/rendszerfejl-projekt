@@ -8,10 +8,10 @@ import json
 @csrf_exempt
 @require_http_methods('POST')
 def login(request):
-    json_data = json.loads(request.body)
+    data = json.loads(request.body)
     try:
-        posted_username = json_data['username']
-        posted_password = json_data['password']
+        posted_username = data['username']
+        posted_password = data['password']
     except KeyError:
         return HttpResponse(reason='Username or password not provided', status=418)
     try:
