@@ -2,46 +2,40 @@ import React from 'react'
 import { Button, Form, TextArea, Header} from 'semantic-ui-react'
 import axios from 'axios';
 import ToolsTable from './ToolsTable';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 
-// Make a request for a user with a given ID
-axios.get('http://127.0.0.1:8000/taskcategories/')
-  .then(function (response) {
-    // handle success
-    //const categories = response.data;
-    //this.setState({ categories });
-
-    console.log(response);
-  })
-
-
-
-const options = [
-
-  { key: 'm', text: 'Male', value: 'male' },
-  { key: 'f', text: 'Female', value: 'female' },
-  { key: 'o', text: 'Other', value: 'other' },
-]
 function AddTool() {
   const [name, setName] = useState("");
   const [task_category_id, setTaskCategoryId] = useState("");
   const [description, setDescription] = useState("");
   const [location, setLocation] = useState("");
 
+  const [items, setItems] = React.useState([]);
+  
+
+  useEffect(() => {
+    async function getCharacters() {
+      const response = await axios.get("http://127.0.0.1:8000/taskcategories/");
+      const data = response.data
+      setItems(data.map(d => ({ key: d.name, value: d.id, text:d.name })));
+    }   
+    getCharacters();
+  }, []);
+
   function addToolToDB() {
     
-    /*axios({
+    axios({
       method: 'post',
       url: 'http://127.0.0.1:8000/devices/',
       data: {
-        "name": "car-02",
-        "task_category_id": 4,
-        "description": "It is a car",
-        "location": "B building"
+        "name": name,
+        "task_category_id":task_category_id,
+        "description": description,
+        "location":location
       }
-    });*/
-    console.log(name, task_category_id, description, location);
+    });
+    console.log(name, task_category_id.toString(), description, location);
   }
 
 
@@ -57,7 +51,7 @@ function AddTool() {
           </Form.Field>
           <Form.Field >
             <label>Kategória</label>
-            <Form.Select options={options} placeholder='Kategória' value={task_category_id} onChange={(e) => setTaskCategoryId(e.target.value)} />
+            <Form.Select options={items} placeholder='Kategória'  onChange={(e, { value }) => setTaskCategoryId(value)} />
           </Form.Field>
           <Form.Field>
             <label>Hely</label>

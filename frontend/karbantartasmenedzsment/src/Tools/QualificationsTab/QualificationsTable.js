@@ -6,6 +6,7 @@ export default class QualificationsTable extends React.Component {
     state = {
         devices: []
     }
+    
 
     componentDidMount() {
         axios.get(`http://127.0.0.1:8000/qualifications/`)
