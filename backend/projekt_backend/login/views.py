@@ -3,11 +3,7 @@ from django.http import JsonResponse, HttpResponse
 from db_api.models import User
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
-<<<<<<< HEAD
 import json
-=======
-
->>>>>>> 2026aaa25e64af63b386a8196ee2ca6e8a6a8e5f
 
 @csrf_exempt
 @require_http_methods('POST')
