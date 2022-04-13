@@ -24,7 +24,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 class TaskSerializer(serializers.ModelSerializer):
     task_category = serializers.SlugRelatedField(slug_field='name', queryset=TaskCategory.objects.all())
-    user = serializers.SlugRelatedField(slug_field='username', queryset=User.objects.all())
+    user = serializers.SlugRelatedField(slug_field='username', queryset=User.objects.all(), allow_null=True, required=False)
 
     class Meta:
         model = Task
