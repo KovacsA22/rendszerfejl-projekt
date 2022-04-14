@@ -1,5 +1,5 @@
-from django.shortcuts import render
 from rest_framework import viewsets
+from rest_framework.response import Response
 from .models import Qualification, TaskCategory, User, Task, RepairmanQualification, Device, CategoryConnection
 from .serializers import QualificationSerializer, TaskCategorySerializer, UserSerializer, TaskSerializer
 from .serializers import RepairmanQualificationSerializer, DeviceSerializer, CategoryConnectionSerializer

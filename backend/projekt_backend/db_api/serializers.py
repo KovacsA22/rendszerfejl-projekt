@@ -1,8 +1,11 @@
 from rest_framework import serializers
 from .models import Qualification, TaskCategory, User, Task, RepairmanQualification, Device, CategoryConnection
+from django.utils import timezone
+import datetime
 
 
 class QualificationSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Qualification
         fields = ('id', 'name')
@@ -29,6 +32,31 @@ class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
         fields = ('created', 'id', 'name', 'severity', 'scheduled_maintenance', 'task_category', 'current_state', 'user', 'periodic')
+
+    def create(self, validated_data):
+        data = validated_data.copy()
+        if data['current_state'] == 4:
+            data['current_state'] = 0
+            scheduled_date = datetime.date.today() + timezone.timedelta(days=data['task_category'].maintenance_period_in_months/12 * 365.2425)
+            scheduled_time = datetime.datetime.combine(scheduled_date, datetime.time(hour=8))
+            data['scheduled_maintenance'] = scheduled_time
+            data['user'] = None
+        return Task.objects.create(**data)
+
+    def update(self, instance, validated_data):
+        instance.name = validated_data.get('name', instance.name)
+        instance.severity = validated_data.get('severity', instance.severity)
+        instance.scheduled_maintenance = validated_data.get('scheduled_maintenance', instance.scheduled_maintenance)
+        instance.task_category = validated_data.get('task_category', instance.task_category)
+        instance.current_state = validated_data.get('current_state', instance.current_state)
+        instance.user = validated_data.get('user', instance.user)
+        instance.periodic = validated_data.get('periodic', instance.periodic)
+
+        if instance.current_state == 4 and instance.periodic is True:
+            self.create(validated_data)
+
+        instance.save()
+        return instance
 
 
 class RepairmanQualificationSerializer(serializers.ModelSerializer):
