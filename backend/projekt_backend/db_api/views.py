@@ -29,6 +29,14 @@ class RepairmanQualificationViewSet(viewsets.ModelViewSet):
     queryset = RepairmanQualification.objects.all().order_by('user_id')
     serializer_class = RepairmanQualificationSerializer
 
+    def get_queryset(self):
+        queryset = RepairmanQualification.objects.all().order_by('user_id')
+        q_id = self.request.query_params.get('q')
+        if q_id is not None:
+            queryset = RepairmanQualification.objects.filter(qualification_id=q_id)
+
+        return queryset
+
 
 class DeviceViewSet(viewsets.ModelViewSet):
     queryset = Device.objects.all().order_by('id')
