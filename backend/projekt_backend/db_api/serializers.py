@@ -50,7 +50,6 @@ class TaskSerializer(serializers.ModelSerializer):
         instance.severity = validated_data.get('severity', instance.severity)
         instance.scheduled_maintenance = validated_data.get('scheduled_maintenance', instance.scheduled_maintenance)
         instance.task_category = validated_data.get('task_category', instance.task_category)
-        instance.task_category = validated_data.get('task_category', instance.task_category_id)
         instance.current_state = validated_data.get('current_state', instance.current_state)
         instance.user = validated_data.get('user', instance.user)
         instance.periodic = validated_data.get('periodic', instance.periodic)

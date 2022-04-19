@@ -24,6 +24,16 @@ class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all().order_by('id')
     serializer_class = TaskSerializer
 
+    def get_queryset(self):
+        queryset = Task.objects.all().order_by('id')
+        username = self.request.query_params.get('u')
+        if username == "null":
+            queryset = Task.objects.filter(user=None)
+        elif username is not None:
+            queryset = Task.objects.filter(user__username=username)
+
+        return queryset
+
 
 class RepairmanQualificationViewSet(viewsets.ModelViewSet):
     queryset = RepairmanQualification.objects.all().order_by('user_id')
