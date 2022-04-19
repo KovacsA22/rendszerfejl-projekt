@@ -38,7 +38,7 @@ class Task(models.Model):
 
     severity = models.IntegerField(choices=Severity.choices, default=Severity.NOT_URGENT)  # súlyosság
     scheduled_maintenance = models.DateTimeField(default=timezone.now)  # ütemezés
-    task_category = models.ForeignKey('TaskCategory', on_delete=models.CASCADE, blank=True, null=True)  # kategóriaId
+    task_category = models.ForeignKey('TaskCategory', on_delete=models.CASCADE, blank=True, null=True)  # kategória
     current_state = models.IntegerField(choices=CurrentState.choices, default=CurrentState.SCHEDULED)  # állapot
     user = models.ForeignKey('User', on_delete=models.CASCADE, blank=True, null=True)  # felhasználóId
     periodic = models.BooleanField(default=True)  # időszakos
