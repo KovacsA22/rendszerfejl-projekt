@@ -29,6 +29,7 @@ class TaskSerializer(serializers.ModelSerializer):
     task_category = serializers.SlugRelatedField(slug_field='name', queryset=TaskCategory.objects.all())
     user = serializers.SlugRelatedField(slug_field='username', queryset=User.objects.all(), allow_null=True, required=False)
     task_category_id = serializers.CharField(source='task_category.id', read_only=True)
+    scheduled_maintenance = serializers.DateTimeField(allow_null=True, required=False)
 
     class Meta:
         model = Task
@@ -37,7 +38,9 @@ class TaskSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         validated_data.pop('task_category_id', None)
         data = validated_data.copy()
-        if data['current_state'] == 4:
+        if 'current_state' not in data and 'scheduled_maintenance' in data:
+            data.setdefault('current_state', 0)
+        if 'current_state' in data and data['current_state'] == 4:
             data['current_state'] = 0
             scheduled_date = datetime.date.today() + timezone.timedelta(days=data['task_category'].maintenance_period_in_months/12 * 365.2425)
             scheduled_time = datetime.datetime.combine(scheduled_date, datetime.time(hour=8))
@@ -50,12 +53,17 @@ class TaskSerializer(serializers.ModelSerializer):
         instance.severity = validated_data.get('severity', instance.severity)
         instance.scheduled_maintenance = validated_data.get('scheduled_maintenance', instance.scheduled_maintenance)
         instance.task_category = validated_data.get('task_category', instance.task_category)
+
+        previous_state = instance.current_state
         instance.current_state = validated_data.get('current_state', instance.current_state)
         instance.user = validated_data.get('user', instance.user)
         instance.periodic = validated_data.get('periodic', instance.periodic)
 
-        if instance.current_state == 4 and instance.periodic is True:
+        if previous_state != 4 and instance.current_state == 4 and instance.periodic is True:
             self.create(validated_data)
+
+        if previous_state == -1 and instance.scheduled_maintenance is not None:
+            instance.current_state = 0
 
         instance.save()
         return instance

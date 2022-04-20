@@ -30,6 +30,7 @@ class Task(models.Model):
         URGENT = 4  # sürgős
 
     class CurrentState(models.IntegerChoices):  # állapot
+        NOT_SCHEDULED = -1  # nincs ütemezve
         SCHEDULED = 0  # ütemezve
         DECLINED = 1  # elutasítva
         ACCEPTED = 2  # elfogadva
@@ -37,9 +38,9 @@ class Task(models.Model):
         FINISHED = 4  # befejezve
 
     severity = models.IntegerField(choices=Severity.choices, default=Severity.NOT_URGENT)  # súlyosság
-    scheduled_maintenance = models.DateTimeField(default=timezone.now)  # ütemezés
+    scheduled_maintenance = models.DateTimeField(default=None, blank=True, null=True)  # ütemezés
     task_category = models.ForeignKey('TaskCategory', on_delete=models.CASCADE, blank=True, null=True)  # kategória
-    current_state = models.IntegerField(choices=CurrentState.choices, default=CurrentState.SCHEDULED)  # állapot
+    current_state = models.IntegerField(choices=CurrentState.choices, default=CurrentState.NOT_SCHEDULED)  # állapot
     user = models.ForeignKey('User', on_delete=models.CASCADE, blank=True, null=True)  # felhasználóId
     periodic = models.BooleanField(default=True)  # időszakos
 
