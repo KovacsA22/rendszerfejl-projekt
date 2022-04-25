@@ -5,6 +5,7 @@ function TaskRow(props){
 
   function getStateText(state){
     switch(state){
+      case -1:return (<>Nincs ütemezve</>);
       case 0:return (<>Ütemezve</>);
       case 1:return (<><Icon name='exclamation'/>Visszautasítva</>);
       case 2:return (<>Elfogadva</>);
@@ -13,18 +14,28 @@ function TaskRow(props){
     }
   }
 
+  const severities = [
+    {id:0,value:0,text:"Nem sürgős"},
+    {id:1,value:1,text:"Alacsony"},
+    {id:2,value:2,text:"Közepes"},
+    {id:3,value:3,text:"Magas"},
+    {id:4,value:4,text:"Nagyon magas"},
+  ];
+
   function getSeverityText(severity){
-    switch(severity){
-      case 0:return (<>Nem sürgős</>);
-      case 1:return (<>Alacsony</>);
-      case 2:return (<>Közepes</>);
-      case 3:return (<>Magas</>);
-      case 4:return (<>Nagyon magas</>);
-    }
+    return severities[severity].text;
   }
 
   function getTimestamp(value){
-    return value.split(".")[0].replace("T"," ").replace("Z","");
+    if(value===null){
+      return "";
+    }else{
+      return value.split(".")[0].replace("T"," ").replace("Z","");
+    }
+  }
+
+  function getDay(timestamp){
+    return timestamp.split(" ")[0];
   }
   
   return (<>
@@ -34,7 +45,7 @@ function TaskRow(props){
       <Table.HeaderCell>{props.name}</Table.HeaderCell>
       <Table.HeaderCell>{props.task_category}</Table.HeaderCell>
       <Table.HeaderCell>{getStateText(props.current_state)}</Table.HeaderCell>
-      <Table.HeaderCell>{getTimestamp(props.scheduled_maintenance)}</Table.HeaderCell>
+      <Table.HeaderCell>{getDay(getTimestamp(props.scheduled_maintenance))}</Table.HeaderCell>
       <Table.HeaderCell>{props.user}</Table.HeaderCell>
       <Table.HeaderCell>{props.periodic?"Igen":"Nem"}</Table.HeaderCell>
       <Table.HeaderCell>
