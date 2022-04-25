@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import Operator from './Operator';
 import OperatorNavBar from './Operator/NavBar';
+import EditTask from './Operator/EditTask';
 import NewTask from './Operator/NewTask';
 import Maintenance from './Maintenance';
 import MaintenanceNavBar from './Maintenance/NavBar';
@@ -14,7 +15,7 @@ import LoginForm from './LoginForm';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import reportWebVitals from './reportWebVitals';
 import { Container } from 'semantic-ui-react';
-import EditTask from './Operator/EditTask';
+
 
 
 ReactDOM.render(
