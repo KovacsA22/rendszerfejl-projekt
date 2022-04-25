@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import Operator from './Operator';
 import OperatorNavBar from './Operator/NavBar';
+import NewTask from './Operator/NewTask';
 import Maintenance from './Maintenance';
 import MaintenanceNavBar from './Maintenance/NavBar';
 import Tools from './Tools';
@@ -39,6 +40,14 @@ ReactDOM.render(
               </Container>
             </>} />
           </Route>
+          <Route path="operator/new" element={
+            <>
+              <OperatorNavBar />
+              <Container style={{ marginTop: '7em' }}>
+                <NewTask />
+              </Container>
+            </>}
+          />
           <Route path="maintenance/" element={
             <>
               <MaintenanceNavBar />
