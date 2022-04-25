@@ -12,7 +12,7 @@ function Operator() {
   const [data, setData] = useState([]);
 
   async function fetchData() {
-    const response = await Axios.get("http://661a-88-132-151-5.ngrok.io/tasks/");
+    const response = await Axios.get("http://127.0.0.1:8000/tasks/");
     setData(response.data);
     /*setData([
       {
@@ -103,7 +103,7 @@ function Operator() {
         <Table.Footer fullWidth>
           <Table.Row>
             <Table.HeaderCell colSpan={9}>
-              <Pagination defaultActivePage={1} totalPages={10} />
+              {/*<Pagination defaultActivePage={1} totalPages={10} />*/}
               <Button
                 floated='right'
                 icon
