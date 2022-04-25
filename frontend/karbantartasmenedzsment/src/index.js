@@ -5,6 +5,7 @@ import App from './App';
 import Operator from './Operator';
 import OperatorNavBar from './Operator/NavBar';
 import EditTask from './Operator/EditTask';
+import ScheduleTask from './Operator/ScheduleTask';
 import NewTask from './Operator/NewTask';
 import Maintenance from './Maintenance';
 import MaintenanceNavBar from './Maintenance/NavBar';
@@ -38,6 +39,15 @@ ReactDOM.render(
               <OperatorNavBar />
               <Container style={{ marginTop: '7em' }}>
                 <EditTask />
+              </Container>
+            </>} />
+          </Route>
+          <Route path="operator/schedule/">
+            <Route path=":taskId" element={
+            <>
+              <OperatorNavBar />
+              <Container style={{ marginTop: '7em' }}>
+                <ScheduleTask />
               </Container>
             </>} />
           </Route>
