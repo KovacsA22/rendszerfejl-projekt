@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
 import Axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -7,23 +7,37 @@ const LoginForm = () => {
 
   const navigate = useNavigate();
 
+  const [error, setError] = useState("");
+
   let username, password;
 
   async function login(){
-    //const response = await Axios.post("/login",{username:username, password:password});
-    const response={data:{role:username}};
-    switch(response.data.role){
-      case "operator":
-        navigate('/manage/operator');
-        break;
-      case "tools":
-        navigate('/manage/tools');
-        break;
-      case "maintenance":
-        navigate('/manage/maintenance');
-        break;
+    setError("");
+    try{
+      const response = await Axios.post("http://127.0.0.1:8000/login/", {username:username, password:password}, {validateStatus:false});
+      if(response.status === 200){
+        //const response={data:{role:username}};
+        switch(response.data.data.role){
+          case 2:
+            navigate('/manage/operator');
+            break;
+          case 1:
+            navigate('/manage/tools');
+            break;
+          case 3:
+            navigate('/manage/maintenance');
+            break;
+          case 0:
+            window.location.assign('http://127.0.0.1:8000/admin/');
+        }
+      }else if(response.status === 418){
+        setError("Érvénytelen felhasználónév vagy jelszó");
+      }else{
+        setError("Hiba: "+response.status);
+      }
+    }catch(e){
+      setError(e.toString());
     }
-
   }
 
 
@@ -48,6 +62,7 @@ const LoginForm = () => {
             <Button color='teal' fluid size='large' onClick={()=>login()}>
               Login
             </Button>
+            {error}
           </Segment>
         </Form>
         <Message>
