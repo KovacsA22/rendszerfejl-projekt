@@ -2,6 +2,9 @@ function Maintenance() {
   return (
     <>
       Maintenance
+      <div>
+        under construction
+      </div>
     </>
   );
 }
