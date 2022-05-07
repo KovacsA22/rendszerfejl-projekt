@@ -4,8 +4,10 @@ import axios from 'axios';
 
 export default class ToolsTable extends React.Component {
     state = {
-        devices: []
+        devices: [],
+        task_categories: []
     }
+
 
     componentDidMount() {
         axios.get(`http://127.0.0.1:8000/devices/`)
@@ -13,9 +15,16 @@ export default class ToolsTable extends React.Component {
                 const devices = res.data;
                 this.setState({ devices });
             })
+        axios.get(`http://127.0.0.1:8000/taskcategories/`)
+            .then(res => {
+                const task_categories = res.data;
+                this.setState({ task_categories });
+            })
     }
 
+
     render() {
+        const names = ['Bruce', 'Clark', 'Diana']
         return (
             <div>
                 <table className="ui celled table">
@@ -34,7 +43,8 @@ export default class ToolsTable extends React.Component {
                                 <tr key={device.id}>
                                     <td>{device.id}</td>
                                     <td>{device.name}</td>
-                                    <td>{device.task_category_id}</td>
+                                    <td>{this.state.task_categories.map(category =>
+                                        category.id !== device.task_category_id ? null : category.name)}</td>
                                     <td>{device.description}</td>
                                     <td>{device.location}</td>
                                 </tr>
@@ -42,6 +52,7 @@ export default class ToolsTable extends React.Component {
                         }
                     </tbody>
                 </table>
+
             </div>
 
         )
