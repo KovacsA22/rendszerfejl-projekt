@@ -8,6 +8,7 @@ import EditTask from './Operator/EditTask';
 import ScheduleTask from './Operator/ScheduleTask';
 import NewTask from './Operator/NewTask';
 import Maintenance from './Maintenance';
+import EditTaskM from './Maintenance/EditTaskM';
 import MaintenanceNavBar from './Maintenance/NavBar';
 import Tools from './Tools';
 import ToolsNavBar from './Tools/NavBar';
@@ -67,6 +68,15 @@ ReactDOM.render(
               </Container>
             </>}
           />
+          <Route path="maintenance/edit/">
+            <Route path=":taskId" element={
+            <>
+              <MaintenanceNavBar />
+              <Container style={{ marginTop: '7em' }}>
+                <EditTaskM />
+              </Container>
+            </>} />
+          </Route>
           <Route path="tools/" element={
             <>
               <ToolsNavBar />
