@@ -4,7 +4,8 @@ import axios from 'axios';
 
 export default class CategoryTable extends React.Component {
     state = {
-        devices: []
+        devices: [],
+        qualifications:[]
     }
 
     componentDidMount() {
@@ -12,6 +13,11 @@ export default class CategoryTable extends React.Component {
             .then(res => {
                 const devices = res.data;
                 this.setState({ devices });
+            })
+        axios.get(`http://127.0.0.1:8000/qualifications/`)
+            .then(res => {
+                const qualifications = res.data;
+                this.setState({ qualifications });
             })
     }
 
@@ -38,7 +44,7 @@ export default class CategoryTable extends React.Component {
                                     <td>{device.time_in_hours}</td>
                                     <td>{device.maintenance_period_in_months}</td>
                                     <td>{device.instructions}</td>
-                                    <td>{device.qualifications}</td>
+                                    <td>{this.state.qualifications.map(q=>q.id===device.qualifications?q.name:null)}</td>
                                 </tr>
                             )
                         }
