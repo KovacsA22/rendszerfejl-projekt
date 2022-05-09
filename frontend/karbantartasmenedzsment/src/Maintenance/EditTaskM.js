@@ -7,7 +7,7 @@ function EditTaskM(props) {
   let params = useParams();
 
   const states = [
-    {id:-1,value:-1,text:"Nincs ütemezve"},
+    //{id:-1,value:-1,text:"Nincs ütemezve"},
     {id:0,value:0,text:"Ütemezve"},
     {id:1,value:1,text:"Visszautasítva"},
     {id:2,value:2,text:"Elfogadva"},
