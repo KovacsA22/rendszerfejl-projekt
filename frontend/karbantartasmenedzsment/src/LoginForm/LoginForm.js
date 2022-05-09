@@ -1,15 +1,18 @@
-import React, {useState} from 'react'
+import React, { useState , useEffect} from 'react'
 import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
 import Axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Cookie from 'universal-cookie';
 
 const LoginForm = () => {
 
-  const navigate = useNavigate();
+  let navigate = useNavigate();
 
   const [error, setError] = useState("");
 
   let username, password;
+
+  const cookies = new Cookie();
 
   async function login(){
     setError("");
@@ -17,6 +20,8 @@ const LoginForm = () => {
       const response = await Axios.post("http://127.0.0.1:8000/login/", {username:username, password:password}, {validateStatus:false});
       if(response.status === 200){
         //const response={data:{role:username}};
+        cookies.set('username',username,{path:'/'});
+        console.log(cookies.get('username'));
         switch(response.data.data.role){
           case 2:
             navigate('/manage/operator');
@@ -40,6 +45,10 @@ const LoginForm = () => {
     }
   }
 
+  useEffect(()=>{
+    console.log("Username:"+cookies.get('username'));
+  },[]);
+
 
   return (
     <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
@@ -49,7 +58,7 @@ const LoginForm = () => {
         </Header>
         <Form size='large'>
           <Segment stacked>
-            <Form.Input fluid icon='user' iconPosition='left' placeholder='E-mail address' onChange={(event)=>{username = event.target.value}} />
+            <Form.Input fluid icon='user' iconPosition='left' placeholder='Username' onChange={(event)=>{username = event.target.value}} />
             <Form.Input
               fluid
               icon='lock'
@@ -66,7 +75,7 @@ const LoginForm = () => {
           </Segment>
         </Form>
         <Message>
-          New to us? <a href='#'>Sign Up</a>
+          Go to <a href='http://localhost:8000/admin/'>Database Control Panel</a>
         </Message>
       </Grid.Column>
     </Grid>
