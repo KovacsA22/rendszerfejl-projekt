@@ -3,92 +3,41 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import Operator from './Operator';
-import OperatorNavBar from './Operator/NavBar';
 import EditTask from './Operator/EditTask';
 import ScheduleTask from './Operator/ScheduleTask';
 import NewTask from './Operator/NewTask';
 import Maintenance from './Maintenance';
 import EditTaskM from './Maintenance/EditTaskM';
-import MaintenanceNavBar from './Maintenance/NavBar';
+import NavBar from './NavBar';
 import Tools from './Tools';
-import ToolsNavBar from './Tools/NavBar';
 import LoginForm from './LoginForm';
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import reportWebVitals from './reportWebVitals';
 import { Container } from 'semantic-ui-react';
 
-
-
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<LoginForm />} />
-        <Route path="/manage/">
-          <Route path="operator/" element={
-            <>
-              <OperatorNavBar />
-              <Container style={{ marginTop: '7em' }}>
-                <Operator />
-              </Container>
-            </>}
-          />
-          <Route path="operator/edit/">
-            <Route path=":taskId" element={
-            <>
-              <OperatorNavBar />
-              <Container style={{ marginTop: '7em' }}>
-                <EditTask />
-              </Container>
-            </>} />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<LoginForm />} />
+          <Route path="/manage/" element={<NavBar />}>
+            <Route path="operator/" element={<Operator />}/>
+            <Route path="operator/edit/">
+              <Route path=":taskId" element={<EditTask />} />
+            </Route>
+            <Route path="operator/schedule/">
+              <Route path=":taskId" element={<ScheduleTask />} />
+            </Route>
+            <Route path="operator/new" element={<NewTask />} />
+            <Route path="maintenance/" element={<Maintenance />} />
+            <Route path="maintenance/edit/">
+              <Route path=":taskId" element={<EditTaskM />} />
+            </Route>
+            <Route path="tools/" element={<Tools />} />
           </Route>
-          <Route path="operator/schedule/">
-            <Route path=":taskId" element={
-            <>
-              <OperatorNavBar />
-              <Container style={{ marginTop: '7em' }}>
-                <ScheduleTask />
-              </Container>
-            </>} />
-          </Route>
-          <Route path="operator/new" element={
-            <>
-              <OperatorNavBar />
-              <Container style={{ marginTop: '7em' }}>
-                <NewTask />
-              </Container>
-            </>}
-          />
-          <Route path="maintenance/" element={
-            <>
-              <MaintenanceNavBar />
-              <Container style={{ marginTop: '7em' }}>
-                <Maintenance />
-              </Container>
-            </>}
-          />
-          <Route path="maintenance/edit/">
-            <Route path=":taskId" element={
-            <>
-              <MaintenanceNavBar />
-              <Container style={{ marginTop: '7em' }}>
-                <EditTaskM />
-              </Container>
-            </>} />
-          </Route>
-          <Route path="tools/" element={
-            <>
-              <ToolsNavBar />
-              <Container style={{ marginTop: '7em' }}>
-                <Tools />
-              </Container>
-            </>}
-          />
-        </Route>
-      </Routes>
-      
-    </BrowserRouter>
+        </Routes>
+      </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );
