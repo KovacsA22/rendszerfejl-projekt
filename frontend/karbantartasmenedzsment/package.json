@@ -45,5 +45,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "overrides": {
+    "react-scripts":{
+      "resolve-url-loader":"^5.0.0"
+    }
   }
 }
